@@ -56,7 +56,7 @@
 							<overwrite>true</overwrite>
 							<resources>
 								<resource>
-									<directory>../frontend/dist/spa</directory>
+									<directory>../frontend/dist</directory>
 								</resource>
 							</resources>
 						</configuration>

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sudagoarth.springquasar</groupId>
   <artifactId>frontend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>vuetify</artifactId>
+      <version>3.0.0-alpha.11</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
@@ -32,21 +41,12 @@
             </configuration>
           </execution>
           <execution>
-            <id>npm install @quasar/cli -g</id>
+            <id>npm run build</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>install @quasar/cli -g</arguments>
-            </configuration>
-          </execution>
-          <execution>
-            <id>npx quasar build</id>
-            <goals>
-              <goal>npx</goal>
-            </goals>
-            <configuration>
-              <arguments>quasar build</arguments>
+              <arguments>run build</arguments>
             </configuration>
           </execution>
         </executions>
