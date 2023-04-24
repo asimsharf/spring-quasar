@@ -2,6 +2,6 @@
   <HelloWorld />
 </template>
 
-<script lang="ts" setup>
+<script setup>
   import HelloWorld from '@/components/HelloWorld.vue'
 </script>
