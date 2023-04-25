@@ -8,7 +8,7 @@
 	<groupId>com.sudagoarth.springquasar</groupId>
 	<artifactId>spring-quasar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MySpringBootVuePlanet</name>
+	<name>Spring Vuetify</name>
 	<description>Demo project for Spring Boot with Vue frontend</description>
 	
 	<packaging>pom</packaging>

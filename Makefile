@@ -4,6 +4,12 @@ install:
 verify:
 	mvn clean verify
 
+compile:
+	mvn clean compile
+
+test:
+	mvn clean test
+
 run:
 	mvn spring-boot:run
 
