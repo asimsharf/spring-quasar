@@ -8,6 +8,7 @@ class SpringQuasarApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

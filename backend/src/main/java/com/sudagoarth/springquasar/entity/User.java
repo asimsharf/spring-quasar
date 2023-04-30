@@ -1,7 +1,9 @@
 package com.sudagoarth.springquasar.entity;
 
-
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -10,6 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 128, nullable = false, unique = true)
     private String email;
 
@@ -25,15 +28,31 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
+    @Column(length = 64)
+    private String image;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    private Set<Role> roles = new HashSet<>();
+
+    public void addRoles(Role role) {
+        roles.add(role);
+    }
+
+    public void removeRoles(Role role) {
+        roles.remove(role);
+    }
+
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, boolean enabled) {
+    public User(String email, String password, String firstName, String lastName, String image) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enabled = enabled;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -50,10 +69,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -84,9 +99,34 @@ public class User {
         this.enabled = enabled;
     }
 
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles.clear();
+        this.roles.addAll(roles);
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", enabled=" + enabled + '}';
+        return "User{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", enabled=" + enabled + ", image='" + image + '\'' + '}';
+    }
+
+    @Transient
+    public String getImagePath() {
+        if (id == null || image == null)
+            return "/images/default-user.png";
+        return "/user-images/" + this.id + "/" + this.image;
     }
 
 }

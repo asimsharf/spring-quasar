@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class TheResponse {
 
-    // This is a static method that returns a ResponseEntity<Object> object without pagination
     public static ResponseEntity<Object> getResponse(String message, HttpStatus status, Object data, Integer code) {
         Map<String, Object> response = new HashMap<>();
         response.put("code", code);
@@ -22,7 +21,6 @@ public class TheResponse {
         return new ResponseEntity<>(response, status);
     }
 
-    // This is a static method that returns a ResponseEntity<Object> object with pagination
     public static ResponseEntity<Object> getResponse(String message, HttpStatus status, Object data, Integer code, Integer currentPage, Integer totalPage, Long startCount, Long endCount, String path) {
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> links = new HashMap<>();
