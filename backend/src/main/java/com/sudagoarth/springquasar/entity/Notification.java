@@ -22,7 +22,7 @@ public class Notification {
     private String description;
 
     @Column(name = "user_type")
-    private String user_type;
+    private String userType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

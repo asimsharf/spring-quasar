@@ -31,6 +31,20 @@ public class User {
     @Column(length = 64)
     private String image;
 
+    @Column(name = "iqama_number", length = 64)
+    private String iqamaNumber;
+
+    @Column(name = "phone", length = 64)
+    private String phone;
+
+    @Column(name = "gender", length = 64)
+    private String gender;
+
+    @Column(name = "birth_date", length = 64)
+    private String birthDate;
+
+
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 

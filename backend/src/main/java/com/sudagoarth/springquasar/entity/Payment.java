@@ -19,16 +19,16 @@ public class Payment {
     private Appointment appointment;
 
     @Column(name = "received_date")
-    private String received_date;
+    private String receivedDate;
 
     @Column(name = "payment_method")
-    private String payment_method;
+    private String paymentMethod;
 
     @Column(name = "amount")
     private Double amount;
 
     @Column(name = "is_paid")
-    private Integer is_paid;
+    private Integer isPaid;
 
 
 }
