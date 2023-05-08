@@ -51,17 +51,8 @@ public class UserService {
         return userRepository.existsById(id);
     }
 
-    public boolean isEmailUnique(Integer id, String email) {
+    public boolean isEmailUnique( String email) {
         User userByEmail = userRepository.getUserByEmail(email);
-
-        if (userByEmail == null) return true;
-
-        boolean isCreatingNew = (id == null);
-
-        if (isCreatingNew) {
-            return false;
-        } else {
-            return Objects.equals(userByEmail.getId(), id);
-        }
+        return Objects.isNull(userByEmail);
     }
 }

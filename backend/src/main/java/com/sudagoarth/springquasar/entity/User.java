@@ -31,8 +31,8 @@ public class User {
     @Column(length = 64)
     private String image;
 
-    @Column(name = "iqama_number", length = 64)
-    private String iqamaNumber;
+    @Column(name = "iqama", length = 64)
+    private String iqama;
 
     @Column(name = "phone", length = 64)
     private String phone;
@@ -61,12 +61,16 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, String image) {
+    public User(String email, String password, String firstName, String lastName, String image, String iqama, String phone, String gender, String birthDate) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.image = image;
+        this.iqama = iqama;
+        this.phone = phone;
+        this.gender = gender;
+        this.birthDate = birthDate;
     }
 
     public Integer getId() {
@@ -129,6 +133,38 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles.clear();
         this.roles.addAll(roles);
+    }
+
+    public String getIqama() {
+        return iqama;
+    }
+
+    public void setIqama(String iqama) {
+        this.iqama = iqama;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

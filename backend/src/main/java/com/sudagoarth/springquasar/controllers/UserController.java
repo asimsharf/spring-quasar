@@ -31,21 +31,15 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<Object> get() {
-        // Get the users
         List<User> user = userService.get();
-        // Return the response
         return TheResponse.getResponse("Users fetched successfully", HttpStatus.OK, user, 1);
     }
     @GetMapping("/users/{id}")
     public ResponseEntity<Object> getById(@PathVariable("id") Integer id) {
-        // Check if the user exists
         if (!userService.isExistsById(id)) {
-            // Return the response
             return TheResponse.getResponse("User not found", HttpStatus.NOT_FOUND, null, 0);
         }
-        // Get the user
         User user = userService.getById(id);
-        // Return the response
         return TheResponse.getResponse("User fetched successfully", HttpStatus.OK, user, 1);
     }
 
@@ -55,33 +49,24 @@ public class UserController {
             @RequestPart("lastName") String lastName,
             @RequestPart("email") String email,
             @RequestPart("password") String password,
+            @RequestPart("iqama") String iqama,
+            @RequestPart("phone") String phone,
+            @RequestPart("gender") String gender,
+            @RequestPart("birthDate") String birthDate,
             @RequestPart("image") MultipartFile multipartFile,
             @RequestParam("roles") Set<Role> roles
     ) throws IOException {
-
-        // check if the email is duplicate
-        if (!userService.isEmailUnique(null, email)) {
-            // Return the response
+        if (!userService.isEmailUnique(email)) {
             return TheResponse.getResponse("Email is duplicate", HttpStatus.BAD_REQUEST, null, 0);
         }
-
-        // Get the file name
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        // Rename the file
         fileName = FileUploadUtils.renameFile(fileName);
-        // Create the user object
-        User newUser = new User(email, password, firstName, lastName, fileName);
-        // Set the roles
+        User newUser = new User(email, password, firstName, lastName, fileName, iqama, phone, gender, birthDate);
         newUser.setRoles(roles);
-        // Save the user
         User user = userService.save(newUser);
-        // Create the directory where the image will be saved
         String uploadDir = "user-images/" + user.getId();
-        // Check if directory exists, if not create it and clean it if it exists already
         if (FileUploadUtils.isDirExists(uploadDir)) FileUploadUtils.cleanDir(uploadDir);
-        // Save the file
         FileUploadUtils.saveFile(uploadDir, fileName, multipartFile);
-        // Return the response
         return TheResponse.getResponse("User saved successfully", HttpStatus.OK, user, 1);
     }
 
@@ -92,33 +77,31 @@ public class UserController {
             @RequestPart("lastName") String lastName,
             @RequestPart("email") String email,
             @RequestPart("password") String password,
+            @RequestPart("iqama") String iqama,
+            @RequestPart("phone") String phone,
+            @RequestPart("gender") String gender,
+            @RequestPart("birthDate") String birthDate,
             @RequestPart("image") MultipartFile multipartFile,
             @RequestParam("roles") Set<Role> roles
     ) throws IOException {
         if (userService.isExistsById(id)){
-            // Get the user
             User user = userService.getById(id);
-            // Get the file name
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            // Rename the file
             fileName = FileUploadUtils.renameFile(fileName);
-            // Create the user object
             user.setEmail(email);
             user.setPassword(password);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setImage(fileName);
-            // Set the roles
+            user.setIqama(iqama);
+            user.setPhone(phone);
+            user.setGender(gender);
+            user.setBirthDate(birthDate);
             user.setRoles(roles);
-            // Save the user
             User savedUser = userService.save(user);
-            // Create the directory where the image will be saved
             String uploadDir = "user-images/" + savedUser.getId();
-            // Check if directory exists, if not create it and clean it if it exists already
             if (FileUploadUtils.isDirExists(uploadDir)) FileUploadUtils.cleanDir(uploadDir);
-            // Save the file
             FileUploadUtils.saveFile(uploadDir, fileName, multipartFile);
-            // Return the response
             return TheResponse.getResponse("User updated successfully", HttpStatus.OK, savedUser, 1);
         } else {
             return TheResponse.getResponse("User not found", HttpStatus.NOT_FOUND, null, 0);
@@ -128,13 +111,9 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Integer id) throws IOException {
         if (userService.isExistsById(id)) {
-            // Delete the user
             userService.delete(id);
-            // Create the directory where the image will be saved
             String uploadDir = "user-images/" + id;
-            // Check if directory exists, if not create it and clean it if it exists already
             if (FileUploadUtils.isDirExists(uploadDir)) FileUploadUtils.cleanDir(uploadDir);
-            // Return the response
             return TheResponse.getResponse("User deleted successfully", HttpStatus.OK, null, 1);
         } else {
             return TheResponse.getResponse("User not found", HttpStatus.NOT_FOUND, null, 0);
